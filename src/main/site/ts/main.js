@@ -16,9 +16,15 @@ const moon = document.getElementById("moon");
 const rising = document.getElementById("rising");
 // Here, when the value of sun is changed, we will call the method postAndUpdate.
 // TODO: Do the same for moon and rising
-sun.addEventListener("change", () => { postAndUpdate(); });
-moon.addEventListener("change", () => { postAndUpdate(); });
-rising.addEventListener("change", () => { postAndUpdate(); });
+sun.addEventListener("change", () => {
+    postAndUpdate();
+});
+moon.addEventListener("change", () => {
+    postAndUpdate();
+});
+rising.addEventListener("change", () => {
+    postAndUpdate();
+});
 function postAndUpdate() {
     // TODO: empty the suggestionList (you want new suggestions each time someone types something new)
     //  HINT: use .innerHTML
@@ -35,15 +41,18 @@ function postAndUpdate() {
     //  HINT: check out the POST REQUESTS section of the lab and of the front-end guide.
     //  Make sure you add "Access-Control-Allow-Origin":"*" to your headers.
     //  Remember to add a type annotation for the response data using the Matches type you defined above!
-    fetch("http://localhost:8080/results", {
+    fetch("http://localhost:4567/results", {
         method: "POST", body: JSON.stringify(postParameters),
-        headers: { "Content-Type": "application/json; charset=UTF=8" }
+        headers: {
+            "Content-Type": "application/json; charset=UTF=8",
+            "Access-Control-Allow-Origin": "*"
+        }
     })
         // TODO: Call and fill in the updateSuggestions method in one of the .then statements in the Promise
         //  Parse the JSON in the response object
         //  HINT: remember to get the specific field in the JSON you want to use
         .then((response) => response.json())
-        .then((data) => updateSuggestions(data["data"]));
+        .then((data) => updateSuggestions(data.matches));
 }
 function updateSuggestions(matches) {
     // TODO: for each element in the set of matches, append it to the suggestionList
@@ -63,13 +72,16 @@ function updateSuggestions(matches) {
 //  values for the sun, moon, and rising using updateValues. Then call postAndUpdate().
 //  HINT: the listener callback function should be asynchronous and wait until the values are
 //  updated before calling postAndUpdate().
-document.addEventListener("keyup", (event) => {
-    const sunVal = sun.options[sun.selectedIndex].value;
-    const moonVal = moon.options[moon.selectedIndex].value;
-    const risingVal = rising.options[rising.selectedIndex].value;
-    console.log(sunVal, moonVal, risingVal);
-    updateValues(sunVal, moonVal, risingVal);
-});
+document.addEventListener("keyup", (event) => __awaiter(void 0, void 0, void 0, function* () {
+    if (event.key === "e") {
+        const sunVal = sun.options[sun.selectedIndex].value;
+        const moonVal = moon.options[moon.selectedIndex].value;
+        const risingVal = rising.options[rising.selectedIndex].value;
+        console.log(sunVal, moonVal, risingVal);
+        yield updateValues("Libra", "Libra", "Libra");
+        postAndUpdate();
+    }
+}));
 function updateValues(sunval, moonval, risingval) {
     return __awaiter(this, void 0, void 0, function* () {
         // This line asynchronously waits 1 second before updating the values.
