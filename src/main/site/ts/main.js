@@ -44,14 +44,9 @@ function postAndUpdate() {
     fetch("http://localhost:4567/results", {
         method: "POST", body: JSON.stringify(postParameters),
         headers: {
-            "Content-Type": "application/json; charset=UTF=8",
             "Access-Control-Allow-Origin": "*"
         }
-    })
-        // TODO: Call and fill in the updateSuggestions method in one of the .then statements in the Promise
-        //  Parse the JSON in the response object
-        //  HINT: remember to get the specific field in the JSON you want to use
-        .then((response) => response.json())
+    }).then((response) => response.json())
         .then((data) => updateSuggestions(data.matches));
 }
 function updateSuggestions(matches) {
@@ -73,14 +68,12 @@ function updateSuggestions(matches) {
 //  HINT: the listener callback function should be asynchronous and wait until the values are
 //  updated before calling postAndUpdate().
 document.addEventListener("keyup", (event) => __awaiter(void 0, void 0, void 0, function* () {
-    if (event.key === "e") {
-        const sunVal = sun.options[sun.selectedIndex].value;
-        const moonVal = moon.options[moon.selectedIndex].value;
-        const risingVal = rising.options[rising.selectedIndex].value;
-        console.log(sunVal, moonVal, risingVal);
-        yield updateValues("Libra", "Libra", "Libra");
-        postAndUpdate();
-    }
+    const sunVal = sun.options[sun.selectedIndex].value;
+    const moonVal = moon.options[moon.selectedIndex].value;
+    const risingVal = rising.options[rising.selectedIndex].value;
+    console.log(sunVal, moonVal, risingVal);
+    yield updateValues("Cancer", "Cancer", "Cancer");
+    postAndUpdate();
 }));
 function updateValues(sunval, moonval, risingval) {
     return __awaiter(this, void 0, void 0, function* () {

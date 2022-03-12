@@ -45,15 +45,9 @@ function postAndUpdate(): void {
     fetch("http://localhost:4567/results", {
         method: "POST", body: JSON.stringify(postParameters),
         headers: {
-            "Content-Type": "application/json; charset=UTF=8",
             "Access-Control-Allow-Origin": "*"
         }
-    })
-
-        // TODO: Call and fill in the updateSuggestions method in one of the .then statements in the Promise
-        //  Parse the JSON in the response object
-        //  HINT: remember to get the specific field in the JSON you want to use
-        .then((response) => response.json())
+    }).then((response) => response.json())
         .then((data: Matches) => updateSuggestions(data.matches))
 }
 
@@ -77,14 +71,12 @@ function updateSuggestions(matches: string[]): void {
 //  HINT: the listener callback function should be asynchronous and wait until the values are
 //  updated before calling postAndUpdate().
 document.addEventListener("keyup", async (event: KeyboardEvent) => {
-    if (event.key === "e") {
         const sunVal = sun.options[sun.selectedIndex].value
         const moonVal = moon.options[moon.selectedIndex].value
         const risingVal = rising.options[rising.selectedIndex].value
         console.log(sunVal, moonVal, risingVal)
-        await updateValues("Libra", "Libra", "Libra")
+        await updateValues("Cancer", "Cancer", "Cancer")
         postAndUpdate()
-    }
 })
 
 async function updateValues(sunval: string, moonval: string, risingval: string): Promise<void> {
